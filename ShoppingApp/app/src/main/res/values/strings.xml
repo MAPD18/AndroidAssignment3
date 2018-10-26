@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ShoppingApp</string>
+    <string name="user_name_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Log in</string>
+    <string name="register_button">Register</string>
+    <string name="first_name_hint">First name</string>
+    <string name="last_name_hint">Last name</string>
+    <string name="address_hint">Address</string>
+    <string name="city_hint">City</string>
+    <string name="postal_code_hint">Postal code</string>
 </resources>

@@ -11,6 +11,18 @@ public class Customer {
     private String city;
     private String postalCode;
 
+    public Customer(String userName, String password, String firstName, String lastName, String address, String city, String postalCode) {
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        LastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.postalCode = postalCode;
+    }
+
+    public Customer() {}
+
     public int getId() {
         return id;
     }
