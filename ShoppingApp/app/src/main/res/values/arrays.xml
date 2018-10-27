@@ -4,4 +4,10 @@
         <item>Customer</item>
         <item>Sales Representative</item>
     </string-array>
+    <string-array name="shoe_category_array">
+        <item>Select Shoe Category</item>
+        <item>Men</item>
+        <item>Women</item>
+        <item>Kids</item>
+    </string-array>
 </resources>

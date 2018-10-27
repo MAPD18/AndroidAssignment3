@@ -9,4 +9,12 @@
     <string name="address_hint">Address</string>
     <string name="city_hint">City</string>
     <string name="postal_code_hint">Postal code</string>
+    <string name="welcome_message">Welcome %1$s</string>
+    <string name="register_shoe_form_title">Register Shoe</string>
+    <string name="shoe_name_field">Name</string>
+    <string name="shoe_size_field">Size</string>
+    <string name="shoe_price_field">Price</string>
+    <string name="shoes_list_title">Shoes list</string>
+    <string name="add_shoe_button">Add Shoe</string>
+    <string name="add_update_shoe">Add / update</string>
 </resources>

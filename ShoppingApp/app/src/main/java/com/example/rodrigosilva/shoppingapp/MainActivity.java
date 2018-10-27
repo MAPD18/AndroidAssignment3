@@ -1,5 +1,6 @@
 package com.example.rodrigosilva.shoppingapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,12 +72,15 @@ public class MainActivity extends AppCompatActivity {
             Customer customer = customerDao.findCustomer(userNameEditText.getText().toString(), passwordEditText.getText().toString());
             if (customer != null) {
                 Toast.makeText(this, "LOGADOO", Toast.LENGTH_LONG).show();
+                getPreferences(Context.MODE_PRIVATE).edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
             }
         } else {
             SalesRepresentativeDao salesRepresentativeDao = new SalesRepresentativeDao(getApplicationContext());
             SalesRepresentative salesRepresentative = salesRepresentativeDao.findSalesRepresentative(userNameEditText.getText().toString(), passwordEditText.getText().toString());
             if (salesRepresentative != null) {
                 Toast.makeText(this, "LOGADOO", Toast.LENGTH_LONG).show();
+                getPreferences(Context.MODE_PRIVATE).edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                startActivity(new Intent(this, ShoeManagementActivity.class));
             }
         }
     }

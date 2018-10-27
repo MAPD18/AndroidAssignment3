@@ -4,9 +4,19 @@ public class Shoe {
 
     private int id;
     private String name;
-    private ShoeCategory category;
+    private int category;
     private int size;
     private float price;
+
+    public Shoe(String name, int category, int size, float price) {
+        this.name = name;
+        this.category = category;
+        this.size = size;
+        this.price = price;
+    }
+
+    public Shoe() {
+    }
 
     public int getId() {
         return id;
@@ -24,11 +34,11 @@ public class Shoe {
         this.name = name;
     }
 
-    public ShoeCategory getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(ShoeCategory category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 

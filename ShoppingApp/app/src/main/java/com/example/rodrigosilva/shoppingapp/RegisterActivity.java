@@ -1,5 +1,6 @@
 package com.example.rodrigosilva.shoppingapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -96,6 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
                     postalCodeEditText.getText().toString());
 
             customerDao.insert(customer);
+
+
             finish();
         }
 
@@ -112,6 +115,9 @@ public class RegisterActivity extends AppCompatActivity {
                     lastNameEditText.getText().toString());
 
             salesRepresentativeDao.insert(salesRepresentative);
+
+            getPreferences(Context.MODE_PRIVATE).edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+            startActivity(new Intent(this, ShoeManagementActivity.class));
             finish();
         }
     }
