@@ -2,6 +2,7 @@ package com.example.rodrigosilva.shoppingapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.rodrigosilva.shoppingapp.data.CustomerDao;
 import com.example.rodrigosilva.shoppingapp.data.SalesRepresentativeDao;
@@ -25,6 +27,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setTitle(R.string.register_user_title);
 
         init();
 
@@ -84,41 +90,83 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerCustomer() {
-        CustomerDao customerDao = new CustomerDao(getApplicationContext());
-        if (customerDao.checkUserNameAlreadyExists(userNameEditText.getText().toString())) {
-            userNameEditText.setError("Username already taken!");
-        } else {
-            Customer customer = new Customer(userNameEditText.getText().toString(),
-                    passwordEditText.getText().toString(),
-                    firstNameEditText.getText().toString(),
-                    lastNameEditText.getText().toString(),
-                    addressEditText.getText().toString(),
-                    cityEditText.getText().toString(),
-                    postalCodeEditText.getText().toString());
+        if (isCustomerFormValid()) {
+            CustomerDao customerDao = new CustomerDao(getApplicationContext());
+            if (customerDao.checkUserNameAlreadyExists(userNameEditText.getText().toString())) {
+                userNameEditText.setError("Username already taken!");
+            } else {
+                Customer customer = new Customer(userNameEditText.getText().toString(),
+                        passwordEditText.getText().toString(),
+                        firstNameEditText.getText().toString(),
+                        lastNameEditText.getText().toString(),
+                        addressEditText.getText().toString(),
+                        cityEditText.getText().toString(),
+                        postalCodeEditText.getText().toString());
 
-            customerDao.insert(customer);
-
-
-            finish();
+                customerDao.insert(customer);
+                Toast.makeText(getApplicationContext(), R.string.user_registered_successfully, Toast.LENGTH_LONG).show();
+                finish();
+            }
         }
-
     }
 
     private void registerSalesRepresentative() {
-        SalesRepresentativeDao salesRepresentativeDao = new SalesRepresentativeDao(getApplicationContext());
-        if (salesRepresentativeDao.checkUserNameAlreadyExists(userNameEditText.getText().toString())) {
-            userNameEditText.setError("Username already taken!");
-        } else {
-            SalesRepresentative salesRepresentative = new SalesRepresentative(userNameEditText.getText().toString(),
-                    passwordEditText.getText().toString(),
-                    firstNameEditText.getText().toString(),
-                    lastNameEditText.getText().toString());
+        if (isSalesRepFormValid()) {
+            SalesRepresentativeDao salesRepresentativeDao = new SalesRepresentativeDao(getApplicationContext());
+            if (salesRepresentativeDao.checkUserNameAlreadyExists(userNameEditText.getText().toString())) {
+                userNameEditText.setError("Username already taken!");
+            } else {
+                SalesRepresentative salesRepresentative = new SalesRepresentative(userNameEditText.getText().toString(),
+                        passwordEditText.getText().toString(),
+                        firstNameEditText.getText().toString(),
+                        lastNameEditText.getText().toString());
 
-            salesRepresentativeDao.insert(salesRepresentative);
+                salesRepresentativeDao.insert(salesRepresentative);
 
-            getPreferences(Context.MODE_PRIVATE).edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
-            startActivity(new Intent(this, ShoeManagementActivity.class));
-            finish();
+                getPreferences(Context.MODE_PRIVATE).edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                Toast.makeText(getApplicationContext(), R.string.user_registered_successfully, Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, ShoeManagementActivity.class));
+                finish();
+            }
         }
+    }
+
+    private boolean isCustomerFormValid() {
+        boolean result = isSalesRepFormValid();
+
+        if (addressEditText.getText().length() == 0) {
+            addressEditText.setError(getString(R.string.error_empty_field));
+            result = false;
+        }
+        if (cityEditText.getText().length() == 0) {
+            cityEditText.setError(getString(R.string.error_empty_field));
+            result = false;
+        }
+        if (postalCodeEditText.getText().length() == 0) {
+            postalCodeEditText.setError(getString(R.string.error_empty_field));
+            result = false;
+        }
+        return result;
+    }
+
+    private boolean isSalesRepFormValid() {
+        boolean result = true;
+        if (userNameEditText.getText().length() == 0) {
+            userNameEditText.setError(getString(R.string.error_empty_field));
+            result = false;
+        }
+        if (passwordEditText.getText().length() == 0) {
+            passwordEditText.setError(getString(R.string.error_empty_field));
+            result = false;
+        }
+        if (firstNameEditText.getText().length() == 0) {
+            firstNameEditText.setError(getString(R.string.error_empty_field));
+            result = false;
+        }
+        if (lastNameEditText.getText().length() == 0) {
+            lastNameEditText.setError(getString(R.string.error_empty_field));
+            result = false;
+        }
+        return result;
     }
 }

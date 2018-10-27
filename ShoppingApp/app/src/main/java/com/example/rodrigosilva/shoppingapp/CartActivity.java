@@ -2,11 +2,9 @@ package com.example.rodrigosilva.shoppingapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +33,10 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setTitle(R.string.my_cart_title);
 
         int shoeId = getIntent().getIntExtra(Constants.SHOE_ID_KEY, 0);
         order = (Order) getIntent().getSerializableExtra(Constants.ORDER_KEY);

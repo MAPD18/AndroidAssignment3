@@ -2,6 +2,7 @@ package com.example.rodrigosilva.shoppingapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.rodrigosilva.shoppingapp.adapter.OrderListAdapter;
 import com.example.rodrigosilva.shoppingapp.data.OrderDao;
@@ -21,11 +23,16 @@ public class MyOrdersActivity extends AppCompatActivity {
     private RecyclerView orderList;
     private OrderListAdapter adapter;
     private OrderDao orderDao;
+    private TextView emptyListTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_orders);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setTitle(R.string.my_orders_title);
 
         orderList = findViewById(R.id.orderList);
         orderList.setHasFixedSize(true);
@@ -48,6 +55,13 @@ public class MyOrdersActivity extends AppCompatActivity {
             adapter = new OrderListAdapter(orderDao.findAllOrdersByCustomer(customerId));
 
         orderList.setAdapter(adapter);
+
+        emptyListTextView = findViewById(R.id.emptyListTextView);
+        emptyListTextView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+
+        TextView welcomeTextView = findViewById(R.id.welcomeTextView);
+        welcomeTextView.setText(String.format(getString(R.string.welcome_message),
+                preferences.getString(Constants.USERNAME_KEY, "")));
     }
 
     @Override

@@ -26,4 +26,14 @@
     <string name="my_orders_menu">My Orders</string>
     <string name="status_label">Status</string>
     <string name="my_orders_title">My Orders</string>
+    <string name="manage_shoes_title">Manage Shoes</string>
+    <string name="register_shoe_title">Register Shoe</string>
+    <string name="register_user_title">Register User</string>
+    <string name="make_order_title">Make Order</string>
+    <string name="my_cart_title">My Cart</string>
+    <string name="my_orders_empty_list_message">You have no Orders</string>
+    <string name="error_empty_field">Field must not be empty</string>
+    <string name="error_login_invalid">Login Invalid!</string>
+    <string name="error_category_invalid">Category is a mandatory field!</string>
+    <string name="user_registered_successfully">User registered successfully!</string>
 </resources>

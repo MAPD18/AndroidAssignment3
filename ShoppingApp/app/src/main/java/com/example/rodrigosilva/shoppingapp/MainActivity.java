@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rodrigosilva.shoppingapp.data.CustomerDao;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText userNameEditText, passwordEditText;
     private Button loginButton, signUpButton;
+    private TextView invalidLoginTextView;
     private boolean isCustomer;
 
     @Override
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         userNameEditText = findViewById(R.id.userNameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+        invalidLoginTextView = findViewById(R.id.invalidLoginTextView);
 
         Spinner userTypeSpinner = findViewById(R.id.userTypeSpinner);
         userTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -68,26 +71,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void attemptLogin() {
-        if (isCustomer) {
-            CustomerDao customerDao = new CustomerDao(getApplicationContext());
-            Customer customer = customerDao.findCustomer(userNameEditText.getText().toString(), passwordEditText.getText().toString());
-            if (customer != null) {
-                SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
-                preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
-                preferences.edit().putInt(Constants.USER_ID_KEY, customer.getId()).apply();
-                preferences.edit().putBoolean(Constants.USER_IS_SALES_KEY, false).apply();
-                startActivity(new Intent(this, OrderActivity.class));
-            }
-        } else {
-            SalesRepresentativeDao salesRepresentativeDao = new SalesRepresentativeDao(getApplicationContext());
-            SalesRepresentative salesRepresentative = salesRepresentativeDao.findSalesRepresentative(userNameEditText.getText().toString(), passwordEditText.getText().toString());
-            if (salesRepresentative != null) {
-                SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
-                preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
-                preferences.edit().putBoolean(Constants.USER_IS_SALES_KEY, true).apply();
-                startActivity(new Intent(this, ShoeManagementActivity.class));
+        if (formIsValid()) {
+            if (isCustomer) {
+                CustomerDao customerDao = new CustomerDao(getApplicationContext());
+                Customer customer = customerDao.findCustomer(userNameEditText.getText().toString(), passwordEditText.getText().toString());
+                if (customer != null) {
+                    SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
+                    preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                    preferences.edit().putInt(Constants.USER_ID_KEY, customer.getId()).apply();
+                    preferences.edit().putBoolean(Constants.USER_IS_SALES_KEY, false).apply();
+                    startActivity(new Intent(this, MyOrdersActivity.class));
+                } else {
+                    invalidLoginTextView.setVisibility(View.VISIBLE);
+                }
+            } else {
+                SalesRepresentativeDao salesRepresentativeDao = new SalesRepresentativeDao(getApplicationContext());
+                SalesRepresentative salesRepresentative = salesRepresentativeDao.findSalesRepresentative(userNameEditText.getText().toString(), passwordEditText.getText().toString());
+                if (salesRepresentative != null) {
+                    SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
+                    preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                    preferences.edit().putBoolean(Constants.USER_IS_SALES_KEY, true).apply();
+                    startActivity(new Intent(this, ShoeManagementActivity.class));
+                } else {
+                    invalidLoginTextView.setVisibility(View.VISIBLE);
+                }
             }
         }
+    }
+
+    private boolean formIsValid() {
+        if (userNameEditText.getText().length() == 0) {
+            userNameEditText.setError(getString(R.string.error_empty_field));
+            return false;
+        } if (passwordEditText.getText().length() == 0) {
+            passwordEditText.setError(getString(R.string.error_empty_field));
+            return false;
+        }
+        return true;
     }
 
     private void startRegisterActivity() {

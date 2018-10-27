@@ -51,8 +51,8 @@ public class ShoeListAdapter extends RecyclerView.Adapter<ShoeListAdapter.MyView
         if (getItemCount() > 0) {
             Shoe shoe = dataSet.get(i);
             myViewHolder.shoeNameTextView.setText(shoe.getName());
-            myViewHolder.shoePriceTextView.setText(String.valueOf(shoe.getPrice()));
-            myViewHolder.shoeSizeTextView.setText(String.valueOf(shoe.getSize()));
+            myViewHolder.shoePriceTextView.setText("CAD$"+String.valueOf(shoe.getPrice()));
+            myViewHolder.shoeSizeTextView.setText("Size: "+String.valueOf(shoe.getSize()));
             myViewHolder.shoeCategoryTextView.setText(getCategory(shoe.getCategory()));
         }
     }
