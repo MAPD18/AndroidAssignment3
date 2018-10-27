@@ -11,6 +11,17 @@ public class Order {
     private int quantity;
     private Status status;
 
+    public Order(Customer customer, Shoe shoe, int quantity) {
+        this.customer = customer;
+        this.shoe = shoe;
+        this.date = new Date();
+        this.quantity = quantity;
+        this.status = Status.IN_PROGRESS;
+    }
+
+    public Order() {
+    }
+
     public int getId() {
         return id;
     }
@@ -58,4 +69,14 @@ public class Order {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public void setStatus(String statusStr) {
+        if (statusStr.equals(Status.IN_PROGRESS.name())) {
+            setStatus(Status.IN_PROGRESS);
+        } else if (statusStr.equals(Status.SHIPPED.name())) {
+            setStatus(Status.SHIPPED);
+        } else if (statusStr.equals(Status.DELIVERED.name())) {
+            setStatus(Status.DELIVERED);
+            }
+        }
 }

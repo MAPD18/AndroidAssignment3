@@ -2,6 +2,7 @@ package com.example.rodrigosilva.shoppingapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -71,15 +72,17 @@ public class MainActivity extends AppCompatActivity {
             CustomerDao customerDao = new CustomerDao(getApplicationContext());
             Customer customer = customerDao.findCustomer(userNameEditText.getText().toString(), passwordEditText.getText().toString());
             if (customer != null) {
-                Toast.makeText(this, "LOGADOO", Toast.LENGTH_LONG).show();
-                getPreferences(Context.MODE_PRIVATE).edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
+                preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                preferences.edit().putInt(Constants.USER_ID_KEY, customer.getId()).apply();
+                startActivity(new Intent(this, OrderActivity.class));
             }
         } else {
             SalesRepresentativeDao salesRepresentativeDao = new SalesRepresentativeDao(getApplicationContext());
             SalesRepresentative salesRepresentative = salesRepresentativeDao.findSalesRepresentative(userNameEditText.getText().toString(), passwordEditText.getText().toString());
             if (salesRepresentative != null) {
-                Toast.makeText(this, "LOGADOO", Toast.LENGTH_LONG).show();
-                getPreferences(Context.MODE_PRIVATE).edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
+                preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
                 startActivity(new Intent(this, ShoeManagementActivity.class));
             }
         }

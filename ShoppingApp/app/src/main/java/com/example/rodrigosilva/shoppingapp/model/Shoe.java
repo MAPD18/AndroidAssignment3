@@ -18,6 +18,10 @@ public class Shoe {
     public Shoe() {
     }
 
+    public Shoe(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

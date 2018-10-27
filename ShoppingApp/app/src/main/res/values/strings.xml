@@ -17,4 +17,13 @@
     <string name="shoes_list_title">Shoes list</string>
     <string name="add_shoe_button">Add Shoe</string>
     <string name="add_update_shoe">Add / update</string>
+    <string name="shoes_order_instruction">Select item do add to Order</string>
+    <string name="order_quantity_label">Quantity</string>
+    <string name="order_item_title">Item</string>
+    <string name="checkout_button">Checkout</string>
+    <string name="order_quantity_hint">number...</string>
+    <string name="order_menu">Make Order</string>
+    <string name="my_orders_menu">My Orders</string>
+    <string name="status_label">Status</string>
+    <string name="my_orders_title">My Orders</string>
 </resources>

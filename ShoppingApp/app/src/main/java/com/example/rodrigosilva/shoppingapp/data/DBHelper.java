@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "ShoppingApp.db";
 
     private static final String SQL_CREATE_CUSTOMER =
@@ -60,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     Contract.Order.COLUMN_NAME_SHOE + " INTEGER," +
                     Contract.Order.COLUMN_NAME_DATE + " REAL," +
                     Contract.Order.COLUMN_NAME_QUANTITY + " INTEGER," +
-                    Contract.Order.COLUMN_NAME_STATUS + " INTEGER)";
+                    Contract.Order.COLUMN_NAME_STATUS + " TEXT)";
 
     private static final String SQL_DELETE_ORDER =
             "DROP TABLE IF EXISTS " + Contract.Order.TABLE_NAME;

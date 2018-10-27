@@ -1,7 +1,7 @@
 package com.example.rodrigosilva.shoppingapp;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,8 +29,9 @@ public class ShoeManagementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shoe_management);
 
         init();
+        SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
         welcomeTextView.setText(String.format(getString(R.string.welcome_message),
-                getPreferences(Context.MODE_PRIVATE).getString(Constants.USERNAME_KEY, "")));
+                preferences.getString(Constants.USERNAME_KEY, "")));
     }
 
     private void init() {

@@ -30,6 +30,10 @@ public class BaseDao {
         dbHelper.close();
     }
 
+    Context getContext() {
+        return this.context;
+    }
+
     protected SQLiteDatabase getDatabase() {
         return database;
     }

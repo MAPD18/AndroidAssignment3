@@ -23,6 +23,37 @@ public class ShoeDao extends BaseDao {
         this.close();
     }
 
+    public Shoe findShoeById(int id) {
+        this.openReadable();
+
+        Shoe shoe = null;
+
+        String whereClause = Contract.Shoe._ID + " = ?";
+
+        try {
+            Cursor cursor = database.query(Contract.Shoe.TABLE_NAME, // The table to query
+                    null, // The columns to return
+                    whereClause, // The columns for the WHERE clause
+                    new String[]{String.valueOf(id)}, // The values for the WHERE clause
+                    null, // don't group the rows
+                    null, // don't filter by row groups
+                    null // The sort order
+            );
+
+            cursor.moveToFirst();
+            if (!cursor.isAfterLast()) {
+                shoe = this.bindSQLite(cursor);
+            }
+            cursor.close();
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        } finally {
+            this.close();
+        }
+
+        return shoe;
+    }
+
     public ArrayList<Shoe> findAllShoes() {
         this.openReadable();
 
@@ -55,32 +86,37 @@ public class ShoeDao extends BaseDao {
 
     }
 
-    public boolean checkShoeNameAlreadyExists(String name) {
+    public ArrayList<Shoe> findAllShoes(int categoryId) {
         this.openReadable();
 
-        boolean result = false;
+        ArrayList<Shoe> shoes = new ArrayList<>();
 
-        String whereClause = Contract.Shoe.COLUMN_NAME_NAME + " = ?";
-
+        String whereClause = Contract.Shoe.COLUMN_NAME_CATEGORY + " = ?";
         try {
             Cursor cursor = database.query(Contract.Shoe.TABLE_NAME, // The table to query
                     null, // The columns to return
                     whereClause, // The columns for the WHERE clause
-                    new String[]{name}, // The values for the WHERE clause
+                    new String[]{String.valueOf(categoryId)}, // The values for the WHERE clause
                     null, // don't group the rows
                     null, // don't filter by row groups
                     null // The sort order
             );
 
-            if (cursor.getCount() > 0)
-                result = true;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Shoe shoe = this.bindSQLite(cursor);
+                shoes.add(shoe);
+                cursor.moveToNext();
+            }
             cursor.close();
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
             this.close();
         }
-        return result;
+
+        return shoes;
+
     }
 
     public void insert(Shoe shoe) {

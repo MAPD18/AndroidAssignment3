@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ShoeManagementActivity" />
-        <activity android:name=".RegisterShoeActivity"></activity>
+        <activity android:name=".RegisterShoeActivity" />
+        <activity android:name=".OrderActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".MyOrdersActivity"></activity>
     </application>
 
 </manifest>

@@ -9,21 +9,21 @@ import android.widget.TextView;
 
 import com.example.rodrigosilva.shoppingapp.R;
 import com.example.rodrigosilva.shoppingapp.listener.CustomItemClickListener;
-import com.example.rodrigosilva.shoppingapp.model.Shoe;
+import com.example.rodrigosilva.shoppingapp.model.Order;
 
 import java.util.ArrayList;
 
-public class ShoeListAdapter extends RecyclerView.Adapter<ShoeListAdapter.MyViewHolder> {
+public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyViewHolder> {
 
-    private ArrayList<Shoe> dataSet;
+    private ArrayList<Order> dataSet;
     private CustomItemClickListener listener;
 
-    public ShoeListAdapter(ArrayList<Shoe> dataSet, CustomItemClickListener listener) {
+    public OrderListAdapter(ArrayList<Order> dataSet, CustomItemClickListener listener) {
         this.dataSet = dataSet;
         this.listener = listener;
     }
 
-    public ShoeListAdapter(ArrayList<Shoe> dataSet) {
+    public OrderListAdapter(ArrayList<Order> dataSet) {
         this.dataSet = dataSet;
     }
 
@@ -31,7 +31,7 @@ public class ShoeListAdapter extends RecyclerView.Adapter<ShoeListAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.shoe_list_item, viewGroup, false);
+                .inflate(R.layout.order_list_item, viewGroup, false);
 
         final MyViewHolder myViewHolder = new MyViewHolder(view);
 
@@ -49,11 +49,13 @@ public class ShoeListAdapter extends RecyclerView.Adapter<ShoeListAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         if (getItemCount() > 0) {
-            Shoe shoe = dataSet.get(i);
-            myViewHolder.shoeNameTextView.setText(shoe.getName());
-            myViewHolder.shoePriceTextView.setText(String.valueOf(shoe.getPrice()));
-            myViewHolder.shoeSizeTextView.setText(String.valueOf(shoe.getSize()));
-            myViewHolder.shoeCategoryTextView.setText(getCategory(shoe.getCategory()));
+            Order order = dataSet.get(i);
+            myViewHolder.shoeNameTextView.setText(order.getShoe().getName());
+            myViewHolder.shoePriceTextView.setText(String.valueOf(order.getShoe().getPrice()));
+            myViewHolder.shoeSizeTextView.setText(String.valueOf(order.getShoe().getSize()));
+            myViewHolder.shoeCategoryTextView.setText(getCategory(order.getShoe().getCategory()));
+            myViewHolder.orderQuantityTextView.setText(String.valueOf(order.getQuantity()));
+            myViewHolder.statusTextView.setText(order.getStatus().name());
         }
     }
 
@@ -62,7 +64,7 @@ public class ShoeListAdapter extends RecyclerView.Adapter<ShoeListAdapter.MyView
         return dataSet.size();
     }
 
-    public void resetDataSet(ArrayList<Shoe> newDataSet) {
+    public void resetDataSet(ArrayList<Order> newDataSet) {
         dataSet = newDataSet;
         notifyDataSetChanged();
     }
@@ -73,7 +75,7 @@ public class ShoeListAdapter extends RecyclerView.Adapter<ShoeListAdapter.MyView
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView shoeNameTextView, shoePriceTextView, shoeSizeTextView, shoeCategoryTextView;
+        TextView shoeNameTextView, shoePriceTextView, shoeSizeTextView, shoeCategoryTextView, orderQuantityTextView, statusTextView;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +83,8 @@ public class ShoeListAdapter extends RecyclerView.Adapter<ShoeListAdapter.MyView
             shoePriceTextView = itemView.findViewById(R.id.shoePriceTextView);
             shoeSizeTextView = itemView.findViewById(R.id.shoeSizeTextView);
             shoeCategoryTextView = itemView.findViewById(R.id.shoeCategoryTextView);
+            orderQuantityTextView = itemView.findViewById(R.id.orderQuantityTextView);
+            statusTextView = itemView.findViewById(R.id.statusTextView);
         }
     }
 

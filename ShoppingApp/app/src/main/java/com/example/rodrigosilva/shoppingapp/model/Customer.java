@@ -21,6 +21,10 @@ public class Customer {
         this.postalCode = postalCode;
     }
 
+    public Customer(int id) {
+        this.id = id;
+    }
+
     public Customer() {}
 
     public int getId() {
