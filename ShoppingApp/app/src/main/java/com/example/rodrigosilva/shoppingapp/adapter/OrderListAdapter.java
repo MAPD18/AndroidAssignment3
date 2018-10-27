@@ -73,6 +73,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         return dataSet.get(position).getId();
     }
 
+    public Order getItemByPosition(int position) {
+        return dataSet.get(position);
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView shoeNameTextView, shoePriceTextView, shoeSizeTextView, shoeCategoryTextView, orderQuantityTextView, statusTextView;

@@ -10,4 +10,10 @@
         <item>Women</item>
         <item>Kids</item>
     </string-array>
+
+    <string-array name="status_array">
+        <item>IN_PROGRESS</item>
+        <item>SHIPPED</item>
+        <item>DELIVERED</item>
+    </string-array>
 </resources>

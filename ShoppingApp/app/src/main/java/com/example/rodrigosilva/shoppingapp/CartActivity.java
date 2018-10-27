@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.rodrigosilva.shoppingapp.data.OrderDao;
@@ -24,9 +25,11 @@ public class CartActivity extends AppCompatActivity {
     TextView shoeNameTextView, shoePriceTextView, shoeSizeTextView, shoeCategoryTextView;
     EditText quantityEditText;
     Button checkoutButton;
+    Spinner statusSpinner;
     private ShoeDao shoeDao;
     private Shoe shoe;
     private int customerId;
+    private Order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +37,15 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         int shoeId = getIntent().getIntExtra(Constants.SHOE_ID_KEY, 0);
+        order = (Order) getIntent().getSerializableExtra(Constants.ORDER_KEY);
+
         SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
         customerId = preferences.getInt(Constants.USER_ID_KEY, 0);
         shoeDao = new ShoeDao(getApplicationContext());
-        shoe = shoeDao.findShoeById(shoeId);
+        if (shoeId == 0)
+            shoe = order.getShoe();
+        else
+            shoe = shoeDao.findShoeById(shoeId);
 
         init();
     }
@@ -53,6 +61,8 @@ public class CartActivity extends AppCompatActivity {
         shoeCategoryTextView.setText(getCategory(shoe.getCategory()));
 
         quantityEditText = findViewById(R.id.quantityEditText);
+        statusSpinner = findViewById(R.id.statusSpinner);
+
         checkoutButton = findViewById(R.id.checkoutButton);
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +70,23 @@ public class CartActivity extends AppCompatActivity {
                 saveOrder();
             }
         });
+
+        if (order != null) {
+            quantityEditText.setText(String.valueOf(order.getQuantity()));
+            quantityEditText.setEnabled(false);
+            statusSpinner.setVisibility(View.VISIBLE);
+            checkoutButton.setText("UPDATE");
+        }
     }
 
     private void saveOrder() {
         OrderDao orderDao = new OrderDao(getApplicationContext());
-        Order order = new Order(new Customer(customerId),
-                shoe,
-                Integer.parseInt(quantityEditText.getText().toString()));
+        if (order == null) {
+            order = new Order(new Customer(customerId),
+                    shoe,
+                    Integer.parseInt(quantityEditText.getText().toString()));
+        } else
+            order.setStatus(statusSpinner.getSelectedItem().toString());
 
         orderDao.insert(order);
         startMyOrdersActivity();

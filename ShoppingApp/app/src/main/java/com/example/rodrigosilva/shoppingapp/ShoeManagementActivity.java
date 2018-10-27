@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -68,5 +71,29 @@ public class ShoeManagementActivity extends AppCompatActivity {
 
     private void updateShoesList() {
         adapter.resetDataSet(shoeDao.findAllShoes());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.customer_order_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.myOrders: {
+                startMyOrdersActivity();
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+
+    }
+
+    private void startMyOrdersActivity() {
+        startActivity(new Intent(this, MyOrdersActivity.class));
     }
 }

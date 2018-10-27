@@ -1,6 +1,8 @@
 package com.example.rodrigosilva.shoppingapp.model;
 
-public class Shoe {
+import java.io.Serializable;
+
+public class Shoe implements Serializable {
 
     private int id;
     private String name;

@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
                 preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
                 preferences.edit().putInt(Constants.USER_ID_KEY, customer.getId()).apply();
+                preferences.edit().putBoolean(Constants.USER_IS_SALES_KEY, false).apply();
                 startActivity(new Intent(this, OrderActivity.class));
             }
         } else {
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             if (salesRepresentative != null) {
                 SharedPreferences preferences = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
                 preferences.edit().putString(Constants.USERNAME_KEY, userNameEditText.getText().toString()).apply();
+                preferences.edit().putBoolean(Constants.USER_IS_SALES_KEY, true).apply();
                 startActivity(new Intent(this, ShoeManagementActivity.class));
             }
         }

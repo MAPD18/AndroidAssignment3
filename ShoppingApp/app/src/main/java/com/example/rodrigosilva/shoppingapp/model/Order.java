@@ -1,8 +1,9 @@
 package com.example.rodrigosilva.shoppingapp.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
 
     private int id;
     private Customer customer;
